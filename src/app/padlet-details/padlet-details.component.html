@@ -1,0 +1,78 @@
+<!--Nur rendern wenn padlet vorhanden ist-->
+
+<button [routerLink]="'/padlets'" class="ui basic button"><i class="left arrow icon"></i>Zurück zum Dashboard</button>
+
+<div class="ui grid" *ngIf="padlet">
+  <div class="six wide column">
+    <br>
+      <div class="column">
+        <h1 class="ui header">{{padlet.title}}</h1>
+    </div>
+    <p>{{padlet.description}}</p>
+    <div class="ui horizontal label" *ngIf="padlet?.is_public">öffentlich</div>
+    <div class="ui horizontal label" *ngIf="!padlet?.is_public">privat</div>
+    <div class="extra"><br>
+      <p>Erstellt von:
+        <a class="ui image label">
+          <img src="{{padlet?.user?.image}}">
+          {{ padlet?.user?.firstname }} {{ padlet?.user?.lastname }}
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="ten wide column right aligned">
+    <button class="ui green basic button">
+      <i class="icon user"></i>
+      User einladen
+    </button>
+    <button class="ui negative basic button" (click)="removePadlet()">
+      <i class="icon delete"></i>
+      Padlet löschen
+    </button>
+    <button class="ui blue basic button" [routerLink]="['../../create/', padlet.id]">
+      <i class="icon edit"></i>
+      Padlet bearbeiten
+    </button>
+  </div>
+
+  <div class="fifteen wide column">
+    <h2 class="ui header">Einträge</h2>
+  </div>
+    <span *ngFor="let entry of padlet?.entries" class="">
+      <div class="ui segment">
+        <button class="mini ui negative basic button"  >
+          <i class="icon delete"></i> Löschen </button>
+
+        <button class="mini ui blue basic button"  [routerLink]="'../../entries/'+entry.id.toString()">
+          <i class="icon edit"></i> Bearbeiten </button>
+
+        <h3 class="ui header">{{ entry?.title }}</h3>
+        <p>{{ entry?.text }}</p>
+
+        <h5 class="ui dividing header"> Bewertungen </h5>
+        <div class="ui small star rating">
+          <a *ngFor="let rating of entry?.ratings" >
+            <i *ngFor="let r of getRating(rating.number)" class="yellow star icon"></i>
+            - <a class="ui image label">
+            <img src="{{rating?.user?.image}}">
+            {{rating?.user?.firstname}} {{rating?.user?.lastname}}
+          </a>
+          </a>
+        </div>
+
+        <h5 class="ui dividing header"> Kommentare </h5>
+        <a *ngFor="let comment of entry?.comments" >
+          <div class="extra">
+            <p> "{{comment.text}}" -
+              <a class="ui image label">
+                <img src="{{comment?.user?.image}}">
+                {{comment?.user?.firstname}} {{comment?.user?.lastname}}
+              </a>
+            </p>
+          </div>
+        </a>
+      </div>
+    </span>
+
+</div>

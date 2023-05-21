@@ -1,0 +1,17 @@
+
+<!-- Zusätzlich überprüfen ob von Parent ein Objekt übergeben wurde - deshalb ngIf und ?-->
+<div class="ui segment">
+<div class="content" *ngIf="padlet">
+  <h3 class="ui header"> {{padlet?.id}} {{ padlet?.title }}</h3><br>
+  <div class="ui green horizontal label" *ngIf="padlet?.is_public">öffentlich</div>
+  <div class="ui blue horizontal label" *ngIf="!padlet?.is_public">privat</div>
+</div>
+<div class="extra"><br>
+  <p>Erstellt von:
+    <a class="ui image label">
+      <img src="{{padlet?.user?.image}}">
+      {{ padlet?.user?.firstname }} {{ padlet?.user?.lastname }}
+    </a></p>
+  <p>Erstellt am: {{padlet?.created_at | date:'dd.MM.yyyy'}}</p>
+</div>
+</div>

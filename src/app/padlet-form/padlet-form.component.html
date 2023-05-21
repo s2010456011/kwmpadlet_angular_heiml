@@ -1,0 +1,60 @@
+<h2>Padlet erstellen/überarbeiten</h2>
+
+<form  class="ui large form" [formGroup]="padletForm" (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="field">
+    <label>Titel</label>
+    <input formControlName="title" type="text">
+    <div *ngIf="errors['title']" class="ui negative message"> {{ errors['title'] }} </div>
+  </div>
+  <div class="field">
+    <label>Beschreibung</label>
+    <input formControlName="description" type="text">
+  </div>
+
+  <div class="field">
+    <label>Sichtbarkeit</label>
+    <input type="radio" formControlName="is_public" value="public" [checked]="padlet.is_public" class="ui radio checkbox"> Öffentlich <br>
+    <input type="radio" formControlName="is_public" value="private" [checked]="!padlet.is_public" class="ui radio checkbox"> Privat
+  </div>
+
+  <div class="field">
+    <label>User hinzufügen</label><br>
+    <div formArrayName="users">
+      <div class="fields" *ngFor="let control of users?.controls; index as i; last as l" [formGroupName]="i">
+        <input type="hidden" formControlName="id">
+        <div class="six wide field">
+          <label>User ID</label>
+          <input formControlName="user" placeholder="User ID">
+          <div class="six wide field">
+
+
+            <!--<label>User</label>
+            <select formControlName="role" id="role{{i+1}}" class="ui fluid dropdown">
+              <span *ngFor="let user of padlet?.users;  index as i; last as l" [formGroupName]="i">
+                  <option formControlName="user"></option>
+              </span>
+            </select>-->
+
+          </div>
+        </div>
+
+
+        <div class="six wide field">
+          <label>Rolle</label>
+          <select formControlName="role" id="role{{i+1}}" class="ui fluid dropdown">
+            <option value="" disabled selected>Rolle wählen...</option>
+            <option value="1">Beobachter</option>
+            <option value="2">Bearbeiter</option>
+            <option value="3">Admin</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button (click)="addUserControl()" class="ui large button" type="button">+</button>
+
+    <div *ngIf="errors['useres']" class="ui negative message">{{ errors['users'] }}</div>
+  </div>
+
+  <button type="submit" class="ui button" [disabled]="padletForm.invalid">Speichern</button>
+</form>

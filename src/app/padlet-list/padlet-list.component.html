@@ -1,0 +1,11 @@
+<h2 class="ui header">Dashboard</h2>
+
+<div class="ui middle aligned selection divided list">
+  <!-- Über Property Binding wird Kind das padlet Objekt übergeben, dafür muss in Child Input Property eingeführt werden-->
+  <a *ngFor="let padlet of padlets" class="item bs-padlet-list-item"  [padlet]="padlet" [routerLink]="padlet.id.toString()">
+  </a>
+</div>
+
+<div *ngIf="!padlets" class="ui active dimmer">
+  <div class="ui large text loader">Daten werden geladen...</div>
+</div>

@@ -1,0 +1,30 @@
+<h2>Eintrag erstellen/überarbeiten</h2>
+
+
+<form  class="ui large form" [formGroup]="entryForm" (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="field">
+    <label>Titel</label>
+    <input formControlName="title" type="text">
+    <div *ngIf="errors['title']" class="ui negative message"> {{ errors['title'] }} </div>
+  </div>
+  <div class="field">
+    <label>Beschreibung</label>
+    <input formControlName="text" type="text">
+  </div>
+
+  <div class="field">
+    <label>Bewertung</label>
+    <input type="number" formControlName="ratings">
+    <div *ngIf="errors['rating']" class="ui negative message">{{ errors['rating'] }}</div>
+    <button (click)="addRatingControl()" class="ui large button" type="button">+</button>
+  </div>
+
+  <div class="field">
+    <label>Kommentar</label>
+    <input type="text" formControlName="comments">
+    <button (click)="addCommentControl()" class="ui large button" type="button">+</button>
+  </div>
+
+  <button type="submit" class="ui button" [disabled]="entryForm.invalid">Speichern</button>
+</form>

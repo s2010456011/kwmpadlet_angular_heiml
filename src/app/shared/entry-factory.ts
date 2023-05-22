@@ -1,6 +1,7 @@
 import {Entry, Padlet, User} from "./padlet";
 import {Comment} from "./comment";
 import {Rating} from "./rating";
+import {Validators} from "@angular/forms";
 
 export class EntryFactory {
 
@@ -8,9 +9,10 @@ export class EntryFactory {
   static empty(): Entry {
     return new Entry(
       0,
-      new Date(),
-      new Date(),
       '',
+      new Date(),
+      new Date(),
+      0,
       0,
       { id: 0, firstname: '', lastname: '', image: '', email: '' },
       [], [], ''
@@ -22,13 +24,15 @@ export class EntryFactory {
   static fromObject (rawEntry: any): Entry{
     return new Entry(
       rawEntry.id,
+      rawEntry.title,
       rawEntry.created_at,
       rawEntry.updated_at,
       rawEntry.user_id,
+      rawEntry.padlet_id,
       rawEntry.user,
       rawEntry.comments,
       rawEntry.ratings,
-      rawEntry.text,
+      rawEntry.text
     )
   }
 

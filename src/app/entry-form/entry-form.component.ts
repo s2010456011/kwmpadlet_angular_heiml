@@ -23,6 +23,7 @@ export class EntryFormComponent implements OnInit{
   isUpdatingEntry = false;
   comments: FormArray;
   ratings: FormArray;
+  padlet_id:number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -32,13 +33,18 @@ export class EntryFormComponent implements OnInit{
   ) {
     //neue Gruppe anlegen = Padlet Form
     this.entryForm = this.fb.group({});
-    this.comments = this.fb.array([])
-    this.ratings = this.fb.array([])
+    this.comments = this.fb.array([]);
+    this.ratings = this.fb.array([]);
   }
 
   ngOnInit(): void {
     //überprüfen ob id in route ist --> wenn ja update, sonst neu
     const id = this.route.snapshot.params["entryid"];
+    this.route.params.subscribe(params => {
+      const id = this.route.snapshot.params["entryid"];
+      //padlet id aus URL auslesen um anschließend zuordnen zu können
+      this.padlet_id = this.route.snapshot.params["id"];
+    });
     if(id){
       //wenn id vorhanden, zustand ändern
       this.isUpdatingEntry = true;
@@ -46,7 +52,6 @@ export class EntryFormComponent implements OnInit{
         //bekommene Daten dem padlet objekt zuweisen
         entry => {
           this.entry = entry;
-          console.log(entry);
           this.initEntry();
         }
       );
@@ -66,13 +71,13 @@ export class EntryFormComponent implements OnInit{
       title: [this.entry.title, Validators.required],
       created_at: new Date(),
       updated_at: new Date(),
-      user_id: [this.entry.user_id],
+      user_id: this.entry.user_id,
+      padlet_id: this.padlet_id,
       user: this.entry.user,
-      comments : this.entry.comments,
-      ratings: this.entry.ratings,
+      comments : this.comments,
+      ratings: this.ratings,
       text: this.entry.text
     });
-
 
     //wenn sich status ändert, werden Validatoren durchlaufen
     this.entryForm.statusChanges.subscribe(() =>
@@ -139,34 +144,38 @@ export class EntryFormComponent implements OnInit{
   }
 
   submitForm(){
-    /*//leere Zeilen von User rausfiltern
-    this.padletForm.value.users = this.padletForm.value.users.filter(
-      (user: {id: number}) => user.id
+   ///leere Zeilen von comment rausfiltern
+    this.entryForm.value.comments = this.entryForm.value.comments.filter(
+      (comment: {text: string}) => comment.text
+    );
+
+    //leere Zeilen von rating rausfiltern
+    this.entryForm.value.ratings = this.entryForm.value.ratings.filter(
+      (rating: {number: number}) => rating.number
     );
 
     //neues buch mit werten von formular befüllen
-    const padlet: Padlet = PadletFactory.fromObject(this.padletForm.value);
-    padlet.entries = this.padlet.entries;
-    if(this.isUpdatingPadlet){
-      this.ps.update(padlet).subscribe(res => {
+    const entry: Entry = EntryFactory.fromObject(this.entryForm.value);
+    //entry.entries = this.padlet.entries;
+    if(this.isUpdatingEntry){
+      this.ps.updateEntry(entry).subscribe(res => {
         //wenn update funktioniert hat, zu Übersicht navigieren
-        this.router.navigate(["../../padlets", padlet.id], {relativeTo: this.route});
+        this.router.navigate(["../../"], {relativeTo: this.route});
       })
-      console.log(padlet);
+      console.log(entry);
 
     }
     else{
-      //neues Buch anlegen
-      //TODO is_public auslesen lassen
-      padlet.user_id = 1;
-      padlet.is_public = false;
-      this.ps.create(padlet).subscribe(res => {
+      //neuen Entry anlegen
+      entry.user_id = 1;
+      console.log(entry);
+      this.ps.createEntry(entry).subscribe(res => {
         //Formular wieder auf leeres Padlet setzen und zurück zur Übersicht
-        this.padlet = PadletFactory.empty();
-        this.padletForm.reset(PadletFactory.empty());
-        this.router.navigate(["../padlets"], {relativeTo: this.route});
+        this.entry = EntryFactory.empty();
+        this.entryForm.reset(EntryFactory.empty());
+        this.router.navigate(["../"], {relativeTo: this.route});
       })
-    }*/
+    }
   }
 
 }

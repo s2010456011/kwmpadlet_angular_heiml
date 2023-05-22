@@ -11,10 +11,11 @@ export {Rating} from "./rating";
 export class Entry {
   constructor(
     public id: number,
+    public title: string,
     public created_at:Date,
     public updated_at:Date,
-    public title: string,
     public user_id:number,
+    public padlet_id:number,
     public user: User,
     public comments?:Comment[],
     public ratings?:Rating[],

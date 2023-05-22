@@ -26,9 +26,19 @@ export class PadletAppService {
     return this.http.post(`${this.api}/padlets`, padlet).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  //übergibt in der payload das padlet
+  createEntry(entry:Entry):Observable<any>{
+    return this.http.post(`${this.api}/entries`, entry).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   //id der aktuellen padlet objekts zusätzlich
   update(padlet:Padlet):Observable<any>{
     return this.http.put(`${this.api}/padlets/${padlet.id}`, padlet).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  //id der aktuellen padlet objekts zusätzlich
+  updateEntry(entry:Entry):Observable<any>{
+    return this.http.put(`${this.api}/entries/${entry.id}`, entry).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   //buch über id löschen, id wird von url ausgelesen
@@ -36,11 +46,23 @@ export class PadletAppService {
     return this.http.delete(`${this.api}/padlets/${id}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  //buch über id löschen, id wird von url ausgelesen
+  removeEntry(id:number):Observable<any>{
+    return this.http.delete(`${this.api}/entries/${id}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
   //gibt ein Array an Padlets zurück
   getAll():Observable<Array<Padlet>>{
     //über http alle padlets zurückgegebn
     //über pipe mehrer methoden aneinander hängen, soll 3 mal wiederholt werden bei error
     return this.http.get<Array<Padlet>>(`${this.api}/padlets`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  //gibt ein Array an Padlets zurück
+  getAllEntries():Observable<Array<Entry>>{
+    //über http alle padlets zurückgegebn
+    //über pipe mehrer methoden aneinander hängen, soll 3 mal wiederholt werden bei error
+    return this.http.get<Array<Entry>>(`${this.api}/padlets`).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   //gibt einzelnes Padlet anhand von ID zurück

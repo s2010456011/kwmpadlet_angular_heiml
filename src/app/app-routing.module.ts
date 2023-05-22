@@ -6,16 +6,19 @@ import {PadletListComponent} from "./padlet-list/padlet-list.component";
 import {PadletFormComponent} from "./padlet-form/padlet-form.component";
 import {EntryDetailComponent} from "./entry-detail/entry-detail.component";
 import {EntryFormComponent} from "./entry-form/entry-form.component";
+import {LoginComponent} from "./login/login.component";
 
 //default Pfad = '' leitet zu route dashboard, kompletter Pfad (full)
 //dashboard route lädt DashboardCompinent
 const routes: Routes =  [
   {path: '', redirectTo: 'padlets', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
   {path: 'padlets', component: PadletListComponent},
   {path: 'padlets/:id', component:PadletDetailsComponent},
   {path: 'create', component:PadletFormComponent},
   {path: 'create/:id', component:PadletFormComponent},
-  {path: 'entries/:entryid', component:EntryFormComponent}
+  {path: 'padlets/:id/entries', component:EntryFormComponent},
+  {path: 'padlets/:id/entries/:entryid', component:EntryFormComponent}
 
 ];
 

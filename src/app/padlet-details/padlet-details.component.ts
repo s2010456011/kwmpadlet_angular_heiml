@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Padlet} from "../shared/padlet";
+import {Entry, Padlet} from "../shared/padlet";
 import {PadletAppService} from "../shared/padlet-app.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {relative} from "@angular/compiler-cli";
 import {PadletFactory} from "../shared/padlet-factory";
 import {ToastrService} from "ngx-toastr";
+import {EntryFactory} from "../shared/entry-factory";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -12,10 +13,12 @@ import {ToastrService} from "ngx-toastr";
   styles: [
   ]
 })
+
 export class PadletDetailsComponent {
 
   //sichergestellt, dass immer ein Padlet Objekt zur Verfügung steht, somit nie undefined
   padlet : Padlet = PadletFactory.empty();
+  entry : Entry = EntryFactory.empty();
 
   //actived Route um URL auszuwerten und Parameter davon rauszuholen
   constructor(
@@ -46,6 +49,20 @@ export class PadletDetailsComponent {
       this.toastr.success(`'${this.padlet?.title}' wurde gelöscht`);
     }
   }
+
+  removeEntry(entry: Entry) {
+    if (confirm("Entry wirklich endgültig löschen?")) {
+      this.ps.removeEntry(entry?.id).subscribe((res: any) => {
+        //da entry erst verschwindet, nach navigieren oder neuladen --> nicht schön aber effizient :)
+        window.location.reload();
+        //toastr message
+        this.toastr.success(`'${this.padlet?.title}' wurde gelöscht`);
+      });
+    }
+  }
+
+
+
 
 
 }

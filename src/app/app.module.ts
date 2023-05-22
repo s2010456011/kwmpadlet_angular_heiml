@@ -14,6 +14,7 @@ import {PadletFormComponent} from './padlet-form/padlet-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { EntryDetailComponent } from './entry-detail/entry-detail.component';
 import { EntryFormComponent } from './entry-form/entry-form.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { EntryFormComponent } from './entry-form/entry-form.component';
     PadletDetailsComponent,
     PadletFormComponent,
     EntryDetailComponent,
-    EntryFormComponent
+    EntryFormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule,

@@ -38,46 +38,20 @@
 
   <div class="fifteen wide column">
     <h2 class="ui header">Einträge</h2>
-    <button [routerLink]="['../../padlets/'+padlet?.id+'/entries']"  class="ui large button" type="button">+</button>
+    <button [routerLink]="['../../padlets/'+padlet?.id+'/entries/edit']"  class="ui large button" type="button">+</button>
   </div>
     <span *ngFor="let entry of padlet?.entries" class="">
       <div class="ui segment">
         <button class="mini ui negative basic button" (click)="removeEntry(entry)">
           <i class="icon delete"></i> Löschen </button>
 
-        <button class="mini ui blue basic button"  [routerLink]="['../../padlets/'+padlet?.id+'/entries', entry.id]" >
+        <button class="mini ui blue basic button"  [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id+'/edit']" >
           <i class="icon edit"></i> Bearbeiten </button>
 
         <h3 class="ui header">{{ entry?.title }}</h3>
         <p>{{ entry?.text }}</p>
 
-        <a>Mehr anzeigen...</a>
-        <!--
-        <h5 class="ui dividing header"> Bewertungen </h5>
-        <div *ngIf="!entry?.ratings">
-          Noch keine Bewertungen vorhanden
-        </div>
-        <div class="ui small star rating">
-          <a *ngFor="let rating of entry?.ratings" >
-            <i *ngFor="let r of getRating(rating.number)" class="yellow star icon"></i>
-            - <a class="ui image label">
-            <img src="{{rating?.user?.image}}">
-            {{rating?.user?.firstname}} {{rating?.user?.lastname}}
-          </a>
-          </a>
-        </div>
-
-        <h5 class="ui dividing header"> Kommentare </h5>
-        <a *ngFor="let comment of entry?.comments" >
-          <div class="extra">
-            <p> "{{comment.text}}" -
-              <a class="ui image label">
-                <img src="{{comment?.user?.image}}">
-                {{comment?.user?.firstname}} {{comment?.user?.lastname}}
-              </a>
-            </p>
-          </div>
-        </a>-->
+        <a [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id]">Mehr anzeigen...</a>
       </div>
     </span>
 

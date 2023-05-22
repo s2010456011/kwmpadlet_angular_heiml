@@ -56,7 +56,7 @@ export class PadletDetailsComponent {
         //da entry erst verschwindet, nach navigieren oder neuladen --> nicht schön aber effizient :)
         window.location.reload();
         //toastr message
-        this.toastr.success(`'${this.padlet?.title}' wurde gelöscht`);
+        this.toastr.success(`'${this.entry?.title}' wurde gelöscht`);
       });
     }
   }

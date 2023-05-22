@@ -62,7 +62,7 @@ export class PadletAppService {
   getAllEntries():Observable<Array<Entry>>{
     //über http alle padlets zurückgegebn
     //über pipe mehrer methoden aneinander hängen, soll 3 mal wiederholt werden bei error
-    return this.http.get<Array<Entry>>(`${this.api}/padlets`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+    return this.http.get<Array<Entry>>(`${this.api}/entries`).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   //gibt einzelnes Padlet anhand von ID zurück
@@ -74,6 +74,11 @@ export class PadletAppService {
   getSingleEntry(entryid: number):Observable<Entry>{
     return this.http.get<Entry>(`${this.api}/entries/${entryid}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
+
+  getSinlgeUser(userid:number):Observable<User>{
+    return this.http.get<User>(`${this.api}/users/${userid}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
 
   private errorHandler(error: Error | any): Observable<any>{
     return throwError(error);

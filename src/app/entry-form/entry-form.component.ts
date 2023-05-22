@@ -5,7 +5,7 @@ import {PadletFactory} from "../shared/padlet-factory";
 import {PadletAppService} from "../shared/padlet-app.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EntryFactory} from "../shared/entry-factory";
-import {PadletFormErrorMessages} from "../padlet-form/padlet-form-error-messages";
+import {EntryFormErrorMessages} from "./entry-form-error-messages";
 
 @Component({
   selector: 'bs-entry-form',
@@ -41,10 +41,10 @@ export class EntryFormComponent implements OnInit{
     //überprüfen ob id in route ist --> wenn ja update, sonst neu
     const id = this.route.snapshot.params["entryid"];
     this.route.params.subscribe(params => {
-      const id = this.route.snapshot.params["entryid"];
       //padlet id aus URL auslesen um anschließend zuordnen zu können
       this.padlet_id = this.route.snapshot.params["id"];
     });
+
     if(id){
       //wenn id vorhanden, zustand ändern
       this.isUpdatingEntry = true;
@@ -63,7 +63,6 @@ export class EntryFormComponent implements OnInit{
 
   //einzelne properties werden an Formularfelder gebunden + Validierung
   initEntry(){
-
     this.buildCommentsArray();
     this.buildRatingsArray();
     this.entryForm = this.fb.group({
@@ -90,7 +89,7 @@ export class EntryFormComponent implements OnInit{
       for(let comment of this.entry.comments){
         let fg = this.fb.group({
           id: new FormControl(comment.id),
-          title: new FormControl(comment.text),
+          text: new FormControl(comment.text),
           //user: new FormControl(comment.user)
         });
         this.comments.push(fg);
@@ -104,10 +103,7 @@ export class EntryFormComponent implements OnInit{
       for(let rating of this.entry.ratings){
         let fg = this.fb.group({
           id: new FormControl(rating.id),
-          number: new FormControl(rating.number,
-            [Validators.required,
-            Validators.minLength(0),
-            Validators.maxLength(5)])
+          number: new FormControl(rating.number, [Validators.min(0), Validators.max(5)])
           //user: new FormControl(rating.user)
         });
         this.ratings.push(fg);
@@ -125,15 +121,16 @@ export class EntryFormComponent implements OnInit{
 
   updateErrorMessages(){
     //zu Beginn immer neu, da es neu befüllt wird
+    console.log("Is form invalid? " + this.entryForm.invalid);
     this.errors = {};
 
-    for(const message of PadletFormErrorMessages){
+    for(const message of EntryFormErrorMessages){
       const control = this.entryForm.get(message.forControl);
       if (
         control &&
         control.dirty &&
         control.invalid && control.errors &&
-        control.errors[message.forValidator] &&
+        control.errors[message.forValidator]&&
         !this.errors[message.forControl]
       ){
         //entsprechende Fehlermeldung speichern
@@ -160,7 +157,7 @@ export class EntryFormComponent implements OnInit{
     if(this.isUpdatingEntry){
       this.ps.updateEntry(entry).subscribe(res => {
         //wenn update funktioniert hat, zu Übersicht navigieren
-        this.router.navigate(["../../"], {relativeTo: this.route});
+        this.router.navigate(["../../../"], {relativeTo: this.route});
       })
       console.log(entry);
 
@@ -173,7 +170,7 @@ export class EntryFormComponent implements OnInit{
         //Formular wieder auf leeres Padlet setzen und zurück zur Übersicht
         this.entry = EntryFactory.empty();
         this.entryForm.reset(EntryFactory.empty());
-        this.router.navigate(["../"], {relativeTo: this.route});
+        this.router.navigate(["../../../"], {relativeTo: this.route});
       })
     }
   }

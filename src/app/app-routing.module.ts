@@ -17,8 +17,9 @@ const routes: Routes =  [
   {path: 'padlets/:id', component:PadletDetailsComponent},
   {path: 'create', component:PadletFormComponent},
   {path: 'create/:id', component:PadletFormComponent},
-  {path: 'padlets/:id/entries', component:EntryFormComponent},
-  {path: 'padlets/:id/entries/:entryid', component:EntryFormComponent}
+  {path: 'padlets/:id/entries/edit', component:EntryFormComponent},
+  {path: 'padlets/:id/entries/:entryid/edit', component:EntryFormComponent},
+  {path: 'padlets/:id/entries/:entryid', component:EntryDetailComponent}
 
 ];
 

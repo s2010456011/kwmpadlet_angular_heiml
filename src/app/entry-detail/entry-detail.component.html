@@ -1,0 +1,52 @@
+<button [routerLink]="'../../'" class="ui basic button"><i class="left arrow icon"></i>Zurück zum Padlet</button>
+
+<div class="ui grid" *ngIf="entry">
+  <div class="six wide column">
+<br><h2>{{entry.title}}</h2><br>
+<p>{{entry.text}}</p>
+</div>
+
+  <div class="ten wide column right aligned">
+    <br>
+    <button class="ui negative basic button" (click)="removeEntry(entry)">
+      <i class="icon delete"></i> Löschen </button>
+
+    <button class=" ui blue basic button"  [routerLink]="['./edit']" >
+      <i class="icon edit"></i> Bearbeiten </button>
+  </div>
+
+  <div class="fifteen wide column">
+    <h5 class="ui dividing header">Bewertungen</h5>
+
+    <div class="ui small list">
+      <div class="item" *ngFor="let rating of entry?.ratings">
+        <i *ngFor="let r of getRating(rating.number)" class="yellow star icon"></i>
+        <div class="content">
+          -
+          <a class="ui image label">
+            <img src="{{rating?.user?.image}}">
+            {{rating?.user?.firstname}} {{rating?.user?.lastname}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="fifteen wide column">
+<h5 class="ui dividing header"> Kommentare </h5>
+
+<div class="ui small relaxed list">
+<span *ngFor="let comment of entry?.comments" >
+  <div class="extra">
+    <p> "{{comment.text}}" -
+      <a class="ui image label">
+        <img src="{{comment?.user?.image}}">
+        {{comment?.user?.firstname}} {{comment?.user?.lastname}}
+      </a>
+    </p>
+  </div>
+</span>
+  </div>
+</div>
+</div>

@@ -1,5 +1,5 @@
 <div *ngIf="!isLoggedIn()">
-  <h1 class="ui header">Login</h1>
+  <h2 class="ui header">Login</h2>
   <form  class="ui large form" [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="field">
       <label>E-Mail</label>
@@ -20,7 +20,9 @@
     <button type="submit" class="ui button" [disabled]="loginForm.invalid">Login</button>
   </form>
 </div>
+
 <div *ngIf="isLoggedIn()">
+  <h2>Sie sind angemeldet!</h2>
   <button type="button" class="ui button" (click)="logout()">Logout</button>
 </div>
 

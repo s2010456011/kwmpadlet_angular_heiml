@@ -26,6 +26,26 @@ export class EntryDetailComponent implements OnInit{
 
   ngOnInit():void{
     const params = this.route.snapshot.params;
-    this.ps.getSingleEntry(params['entryid']).subscribe((e:Entry) => this.entry = e);  }
+    this.ps.getSingleEntry(params['entryid']).subscribe((e:Entry) => this.entry = e);
+  }
+
+  getRating(num: number){
+    return new Array(num);
+  }
+
+//remove methode von entry detail ansicht aus!
+  removeEntry(entry: Entry) {
+    if (confirm("Entry wirklich endgültig löschen?")) {
+      this.ps.removeEntry(entry?.id).subscribe(
+        (res: any) => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+          //toastr message
+          this.toastr.success(`'${this.entry?.title}' wurde gelöscht`);
+        }
+      );
+    }
+  }
+
+
 
 }

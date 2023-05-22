@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../shared/authentication.service";
+import {ToastrService} from "ngx-toastr";
 
 interface Response{
   access_token: string;
@@ -19,8 +20,10 @@ export class LoginComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthenticationService
-    ) {
+    private authService: AuthenticationService,
+    private toastr:ToastrService
+
+  ) {
 
     this.loginForm = this.fb.group({});
   }
@@ -37,20 +40,21 @@ export class LoginComponent implements OnInit{
   if (val.email && val.password){
     this.authService.login(val.email, val.password).subscribe((res: any) => {
       console.log(res);
-      //this.authService.setSessionStorage((res as Response).access_token);
-      //this.router.navigateByUrl("/");
+      this.authService.setSessionStorage((res as Response).access_token);
+      this.router.navigateByUrl("/");
+      this.toastr.success("Erfolgreich angemeldet", "Willkommen");
     })
   };
 
 }
 
 isLoggedIn(){
-    return false;
-  //return this.authService.isLoggedIn();
+  return this.authService.isLoggedIn();
 }
 
 logout(){
-  //this.authService.logout();
+  this.authService.logout();
+  this.toastr.success("Erfolgreich abgemeldet", "Auf Wiedersehen!");
 }
 
 

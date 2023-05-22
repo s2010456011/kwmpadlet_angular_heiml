@@ -6,6 +6,7 @@ import {relative} from "@angular/compiler-cli";
 import {PadletFactory} from "../shared/padlet-factory";
 import {ToastrService} from "ngx-toastr";
 import {EntryFactory} from "../shared/entry-factory";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -25,7 +26,8 @@ export class PadletDetailsComponent {
     private ps:PadletAppService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    public authService: AuthenticationService
   ) {
   }
 

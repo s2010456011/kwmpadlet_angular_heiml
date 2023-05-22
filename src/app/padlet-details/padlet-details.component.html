@@ -22,15 +22,15 @@
   </div>
 
   <div class="ten wide column right aligned">
-    <button class="ui green basic button">
+    <button class="ui green basic button" *ngIf="authService.isLoggedIn()">
       <i class="icon user"></i>
       User einladen
     </button>
-    <button class="ui negative basic button" (click)="removePadlet()">
+    <button  class="ui negative basic button" *ngIf="authService.isLoggedIn()" (click)="removePadlet()">
       <i class="icon delete"></i>
       Padlet löschen
     </button>
-    <button class="ui blue basic button" [routerLink]="['../../create/', padlet.id]">
+    <button class="ui blue basic button" *ngIf="authService.isLoggedIn()" [routerLink]="['../../create/', padlet.id]">
       <i class="icon edit"></i>
       Padlet bearbeiten
     </button>
@@ -42,10 +42,10 @@
   </div>
     <span *ngFor="let entry of padlet?.entries" class="">
       <div class="ui segment">
-        <button class="mini ui negative basic button" (click)="removeEntry(entry)">
+        <button class="mini ui negative basic button" *ngIf="authService.isLoggedIn()" (click)="removeEntry(entry)">
           <i class="icon delete"></i> Löschen </button>
 
-        <button class="mini ui blue basic button"  [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id+'/edit']" >
+        <button class="mini ui blue basic button" *ngIf="authService.isLoggedIn()" [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id+'/edit']" >
           <i class="icon edit"></i> Bearbeiten </button>
 
         <h3 class="ui header">{{ entry?.title }}</h3>

@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {PadletFactory} from "../shared/padlet-factory";
 import {EntryFactory} from "../shared/entry-factory";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-entry-detail',
@@ -20,7 +21,9 @@ export class EntryDetailComponent implements OnInit{
     private ps:PadletAppService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    public authService: AuthenticationService
+
   ) {
   }
 

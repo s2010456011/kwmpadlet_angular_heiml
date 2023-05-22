@@ -19,7 +19,8 @@
     <div *ngFor="let control of ratings.controls; let i = index" [formGroupName]="i">
       <input type="number" formControlName="number">
     </div>
-    <button (click)="addRatingControl()" class="ui large button" type="button">+</button>
+    <i *ngIf="!authService.isLoggedIn()" >Nur für angemeldete User möglich</i>
+    <button *ngIf="authService.isLoggedIn()"  (click)="addRatingControl()" class="ui large button" type="button">+</button>
   </div>
   <div *ngIf="errors['ratings']" class="ui negative message">{{ errors['ratings'] }}</div>
 
@@ -29,7 +30,8 @@
     <div *ngFor="let control of comments.controls; let i = index" [formGroupName]="i">
       <input type="text" formControlName="text">
     </div>
-    <button (click)="addCommentControl()" class="ui large button" type="button">+</button>
+    <i *ngIf="!authService.isLoggedIn()" >Nur für angemeldete User möglich</i>
+    <button *ngIf="authService.isLoggedIn()"  (click)="addCommentControl()" class="ui large button" type="button">+</button>
   </div>
 
   <button type="submit" class="ui button" [disabled]="entryForm.invalid">Speichern</button>

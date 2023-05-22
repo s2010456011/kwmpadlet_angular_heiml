@@ -8,10 +8,10 @@
 
   <div class="ten wide column right aligned">
     <br>
-    <button class="ui negative basic button" (click)="removeEntry(entry)">
+    <button class="ui negative basic button" *ngIf="authService.isLoggedIn()" (click)="removeEntry(entry)">
       <i class="icon delete"></i> Löschen </button>
 
-    <button class=" ui blue basic button"  [routerLink]="['./edit']" >
+    <button class=" ui blue basic button" *ngIf="authService.isLoggedIn()"  [routerLink]="['./edit']" >
       <i class="icon edit"></i> Bearbeiten </button>
   </div>
 

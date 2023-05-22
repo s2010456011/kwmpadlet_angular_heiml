@@ -6,6 +6,7 @@ import {PadletAppService} from "../shared/padlet-app.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EntryFactory} from "../shared/entry-factory";
 import {EntryFormErrorMessages} from "./entry-form-error-messages";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-entry-form',
@@ -29,7 +30,9 @@ export class EntryFormComponent implements OnInit{
     private fb: FormBuilder,
     private ps: PadletAppService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthenticationService
+
   ) {
     //neue Gruppe anlegen = Padlet Form
     this.entryForm = this.fb.group({});
@@ -170,7 +173,7 @@ export class EntryFormComponent implements OnInit{
         //Formular wieder auf leeres Padlet setzen und zurück zur Übersicht
         this.entry = EntryFactory.empty();
         this.entryForm.reset(EntryFactory.empty());
-        this.router.navigate(["../../../"], {relativeTo: this.route});
+        this.router.navigate(["../../"], {relativeTo: this.route});
       })
     }
   }

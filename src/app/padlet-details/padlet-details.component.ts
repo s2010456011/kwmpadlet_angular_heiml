@@ -23,6 +23,7 @@ export class PadletDetailsComponent {
   entry : Entry = EntryFactory.empty();
   padletUser:PadletUser[] =[];
   users:User[] = [];
+  curUser = Number(this.authService.getUserId());
 
   //actived Route um URL auszuwerten und Parameter davon rauszuholen
   constructor(
@@ -64,7 +65,6 @@ export class PadletDetailsComponent {
     else{
       alert("Nur der/die Ersteller/in darf dieses Padlet löschen");
     }
-
   }
 
   removeEntry(entry: Entry) {

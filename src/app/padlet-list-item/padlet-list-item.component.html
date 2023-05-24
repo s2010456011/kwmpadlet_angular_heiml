@@ -7,7 +7,7 @@
   <div class="ui blue horizontal label" *ngIf="!padlet?.is_public">privat</div>
 </div>
 <div class="extra"><br>
-  <div *ngIf="padlet?.user">
+  <div *ngIf="padlet?.user" style="margin-bottom: 10px">
   <p>Erstellt von:
     <a class="ui image label" *ngIf="padlet?.user">
       <img src="{{padlet?.user?.image}}">

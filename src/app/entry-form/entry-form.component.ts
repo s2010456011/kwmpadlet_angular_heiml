@@ -190,7 +190,6 @@ export class EntryFormComponent implements OnInit{
           comment.user_id = userId;
           this.ps.getSinlgeUser(parseInt(userId)).subscribe(user => {
             comment.user = user;
-            console.log(comment.user.firstname)
           });
           }
       }

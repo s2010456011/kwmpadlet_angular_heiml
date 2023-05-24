@@ -20,7 +20,7 @@
     </div><br>
   </div>
 
-  <div class="field"  *ngIf="this.padlet.user?.id == this.userId || this.isUpdatingPadlet== false">
+  <div class="field"  *ngIf="authService.isLoggedIn() && (this.padlet.user?.id == this.userId || this.isUpdatingPadlet== false)">
     <h3 class="ui header">User hinzufügen</h3><br>
     <div formArrayName="userRoles">
       <div class="fields" *ngFor="let control of userRoles?.controls; index as i; last as l" [formGroupName]="i">

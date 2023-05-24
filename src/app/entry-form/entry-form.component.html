@@ -29,6 +29,7 @@
   <div class="field" formArrayName="comments">
     <label>Kommentare</label>
     <div *ngFor="let control of comments.controls; let i = index" [formGroupName]="i">
+      <input type="hidden" formControlName="id">
       <input type="text" formControlName="text">
     </div>
     <i *ngIf="!authService.isLoggedIn()" >Nur für angemeldete User möglich</i>

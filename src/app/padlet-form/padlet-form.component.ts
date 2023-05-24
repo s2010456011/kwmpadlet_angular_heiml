@@ -155,18 +155,20 @@ export class PadletFormComponent implements OnInit{
 
     //neues buch mit werten von formular befüllen
     const padlet: Padlet = PadletFactory.fromObject(this.padletForm.value);
-    padlet.entries = this.padlet.entries;
 
     if(this.isUpdatingPadlet){
+      padlet.entries = this.padlet.entries;
+
       this.ps.update({
         id: this.padlet.id,
         title: this.padletForm.value.title,
-        description: this.padletForm.value.title,
+        description: this.padletForm.value.description,
         is_public: this.padlet.is_public,
         created_at: new Date(),
         updated_at: new Date(),
         user_id: this.padlet.user_id,
         user: this.padlet.user,
+        entries: this.padlet.entries,
         users: this.padletForm.value.userRoles.map((user: any) => ({
           padlet_id: this.padlet.id,
           id: user.user_id,
@@ -199,7 +201,7 @@ export class PadletFormComponent implements OnInit{
       this.ps.create({
         id: this.padlet.id,
         title: this.padletForm.value.title,
-        description: this.padletForm.value.title,
+        description: this.padletForm.value.description,
         is_public: this.padlet.is_public,
         created_at: new Date(),
         updated_at: new Date(),

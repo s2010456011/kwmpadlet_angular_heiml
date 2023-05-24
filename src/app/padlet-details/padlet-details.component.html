@@ -6,7 +6,7 @@
   <div class="eight wide column">
     <br>
       <div class="column">
-        <h1 class="ui header">{{padlet.title}}</h1>
+        <h1 class="ui header" style="margin: 10px 0">{{padlet.title}}</h1>
     </div>
     <p>{{padlet.description}}</p>
     <div class="ui horizontal label" *ngIf="padlet?.is_public">öffentlich</div>
@@ -26,12 +26,12 @@
       {{ user.firstname}} {{ user.lastname }}
     </a>
   </span>
-
     </div>
   </div>
 
   <div class="eight wide column right aligned">
-    <button class="ui green basic button" *ngIf="authService.isLoggedIn()" [routerLink]="['../../create/', padlet.id]">
+    <button class="ui green basic button" *ngIf="authService.isLoggedIn()
+    && this.padlet.user_id == this.curUser" [routerLink]="['../../create/', padlet.id]">
       <i class="icon user"></i>
       User einladen
     </button>

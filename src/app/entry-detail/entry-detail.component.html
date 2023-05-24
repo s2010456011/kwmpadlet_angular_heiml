@@ -7,7 +7,7 @@
 
     <div *ngIf="authService.isLoggedIn()">
     <p>Erstellt von:
-      <a class="ui image label">
+      <a class="ui image label" style="margin-bottom: 10px">
         <img src="{{entry?.user?.image}}">
         {{ entry?.user?.firstname }} {{ entry?.user?.lastname }}
       </a>

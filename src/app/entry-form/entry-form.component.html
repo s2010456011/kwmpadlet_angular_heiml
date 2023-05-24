@@ -17,7 +17,8 @@
   <div class="field" formArrayName="ratings">
     <label>Bewertungen</label>
     <div *ngFor="let control of ratings.controls; let i = index" [formGroupName]="i">
-      <input type="number" formControlName="number">
+    <input type="hidden" formControlName="id">
+    <input type="number" formControlName="number">
     </div>
     <i *ngIf="!authService.isLoggedIn()" >Nur für angemeldete User möglich</i>
     <button *ngIf="authService.isLoggedIn()"  (click)="addRatingControl()" class="ui large button" type="button">+</button>

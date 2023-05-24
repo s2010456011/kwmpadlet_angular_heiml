@@ -5,8 +5,9 @@ import {User} from "./user";
 import {Comment} from "./comment";
 import {Rating} from "./rating";
 import {HttpClient} from "@angular/common/http";
-import {ObjectUnsubscribedError, Observable, throwError} from "rxjs";
+import {forkJoin, mergeMap, ObjectUnsubscribedError, Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs/operators";
+import {Role} from "./role";
 
 @Injectable({
   providedIn: 'root'
@@ -60,9 +61,21 @@ export class PadletAppService {
 
   //gibt ein Array an Padlets zurück
   getAllEntries():Observable<Array<Entry>>{
-    //über http alle padlets zurückgegebn
+    //über http alle entries zurückgegebn
     //über pipe mehrer methoden aneinander hängen, soll 3 mal wiederholt werden bei error
     return this.http.get<Array<Entry>>(`${this.api}/entries`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  //gibt ein Array an User zurück
+  getAllUsers():Observable<Array<User>>{
+    //über pipe mehrer methoden aneinander hängen, soll 3 mal wiederholt werden bei error
+    return this.http.get<Array<User>>(`${this.api}/users`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  //gibt ein Array an Rollen zurück
+  getAllRoles():Observable<Array<Role>>{
+    //über pipe mehrer methoden aneinander hängen, soll 3 mal wiederholt werden bei error
+    return this.http.get<Array<Role>>(`${this.api}/roles`).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   //gibt einzelnes Padlet anhand von ID zurück
@@ -78,6 +91,20 @@ export class PadletAppService {
   getSinlgeUser(userid:number):Observable<User>{
     return this.http.get<User>(`${this.api}/users/${userid}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
+
+  getSinglePadletUser(padletid:number):Observable<any>{
+    return this.http.get<any>(`${this.api}/userRoles/${padletid}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getAllSearch(searchTerm:string):Observable<Array<Padlet>>{
+    return this.http.get<Padlet>(`${this.api}/padlets/search/${searchTerm}`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getUserRole():Observable<Array<any>>{
+    return this.http.get<any>(`${this.api}/userRoles`).pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+
 
 
   private errorHandler(error: Error | any): Observable<any>{

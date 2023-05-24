@@ -14,39 +14,30 @@
 
   <div class="field">
     <label>Sichtbarkeit</label>
-    <input type="radio" formControlName="is_public" value="public" [checked]="padlet.is_public" class="ui radio checkbox"> Öffentlich <br>
-    <input type="radio" formControlName="is_public" value="private" [checked]="!padlet.is_public" class="ui radio checkbox"> Privat
+    <input type="radio" formControlName="is_public" value="1" [checked]="padlet.is_public" class="ui radio checkbox"> Öffentlich <br>
+    <div *ngIf="authService.isLoggedIn()" >
+    <input  type="radio" formControlName="is_public" value="0" [checked]="!padlet.is_public" class="ui disabled"> Privat
+    </div><br>
   </div>
 
-  <div class="field">
-    <label>User hinzufügen</label><br>
-    <div formArrayName="users">
-      <div class="fields" *ngFor="let control of users?.controls; index as i; last as l" [formGroupName]="i">
+  <div class="field"  *ngIf="this.padlet.user?.id == this.userId || this.isUpdatingPadlet== false">
+    <h3 class="ui header">User hinzufügen</h3><br>
+    <div formArrayName="userRoles">
+      <div class="fields" *ngFor="let control of userRoles?.controls; index as i; last as l" [formGroupName]="i">
         <input type="hidden" formControlName="id">
         <div class="six wide field">
-          <label>User ID</label>
-          <input formControlName="user" placeholder="User ID">
-          <div class="six wide field">
-
-
-            <!--<label>User</label>
-            <select formControlName="role" id="role{{i+1}}" class="ui fluid dropdown">
-              <span *ngFor="let user of padlet?.users;  index as i; last as l" [formGroupName]="i">
-                  <option formControlName="user"></option>
-              </span>
-            </select>-->
-
-          </div>
+          <label>User wählen... </label>
+          <select class="ui fluid dropdown" formControlName="user_id">
+            <option class="hidden" disabled selected>Auswählen...</option>
+            <option id="user{{i+1}}" *ngFor="let user of this.allUsers" [value]="user.id">{{ user.firstname }} {{ user.lastname }}</option>
+          </select>
         </div>
 
-
         <div class="six wide field">
-          <label>Rolle</label>
-          <select formControlName="role" id="role{{i+1}}" class="ui fluid dropdown">
-            <option value="" disabled selected>Rolle wählen...</option>
-            <option value="1">Beobachter</option>
-            <option value="2">Bearbeiter</option>
-            <option value="3">Admin</option>
+          <label>Rolle wählen...</label>
+          <select class="ui fluid dropdown" formControlName="role_id">
+            <option class="hidden" disabled selected>Auswählen...</option>
+            <option id="role{{i+1}}" *ngFor="let role of this.allRoles" [value]="role.id">{{ role.name }}</option>
           </select>
         </div>
       </div>
@@ -55,6 +46,7 @@
 
     <div *ngIf="errors['useres']" class="ui negative message">{{ errors['users'] }}</div>
   </div>
+
 
   <button type="submit" class="ui button" [disabled]="padletForm.invalid">Speichern</button>
 </form>

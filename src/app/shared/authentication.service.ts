@@ -42,6 +42,11 @@ export class AuthenticationService {
     sessionStorage.setItem("userId", decodedToken.user.id);
   }
 
+  //gibt die id des aktuell eingeloggten user zurück
+  public getUserId(): string | null {
+    return sessionStorage.getItem("userId");
+  }
+
   public isLoggedIn():boolean{
     //wenn token vorhanden ist
     if(sessionStorage.getItem("token")){

@@ -7,6 +7,7 @@ import {PadletFormComponent} from "./padlet-form/padlet-form.component";
 import {EntryDetailComponent} from "./entry-detail/entry-detail.component";
 import {EntryFormComponent} from "./entry-form/entry-form.component";
 import {LoginComponent} from "./login/login.component";
+import {CanNavigateToAdminGuard} from "./can-navigate-to-admin.guard";
 
 //default Pfad = '' leitet zu route dashboard, kompletter Pfad (full)
 //dashboard route lädt DashboardCompinent
@@ -27,7 +28,7 @@ const routes: Routes =  [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [CanNavigateToAdminGuard]
 })
 
 export class AppRoutingModule{}

@@ -2,9 +2,21 @@
 
 <div class="ui grid" *ngIf="entry">
   <div class="six wide column">
-<br><h2>{{entry.title}}</h2><br>
-<p>{{entry.text}}</p>
-</div>
+<br><h2>{{entry.title}}</h2>
+<p>{{entry.text}}</p><br>
+
+    <div *ngIf="authService.isLoggedIn()">
+    <p>Erstellt von:
+      <a class="ui image label">
+        <img src="{{entry?.user?.image}}">
+        {{ entry?.user?.firstname }} {{ entry?.user?.lastname }}
+      </a>
+    </p>
+    </div>
+    <p>Erstellt am: {{entry?.created_at | date:'dd.MM.yyyy'}}</p>
+
+  </div>
+
 
   <div class="ten wide column right aligned">
     <br>
@@ -24,8 +36,8 @@
         <div class="content">
           -
           <a class="ui image label">
-            <img src="{{rating?.user?.image}}">
-            {{rating?.user?.firstname}} {{rating?.user?.lastname}}
+            von User ID:
+            {{rating?.user_id}}
           </a>
         </div>
       </div>
@@ -38,15 +50,13 @@
 
 <div class="ui small relaxed list">
 <span *ngFor="let comment of entry?.comments" >
-  <div class="extra">
+  <div class="extra" style="margin-bottom: 10px" >
     <p> "{{comment.text}}" -
       <a class="ui image label">
-        <img src="{{comment?.user?.image}}">
-        {{comment?.user?.firstname}} {{comment?.user?.lastname}}
+            von User ID:
+              {{comment?.user_id}}
       </a>
     </p>
   </div>
 </span>
-  </div>
-</div>
 </div>

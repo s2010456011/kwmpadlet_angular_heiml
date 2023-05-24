@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Padlet} from "../shared/padlet";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'a.bs-padlet-list-item',
@@ -9,12 +10,13 @@ import {Padlet} from "../shared/padlet";
 })
 export class PadletListItemComponent implements  OnInit{
 
+
+
   //von der übergeordneten Komponente (padlet-list) bekommen wir das Padlet übergeben
   //muss hier über Input implementiert werden
   @Input() padlet : Padlet | undefined;
 
   ngOnInit(): void {
-
 
   }
 

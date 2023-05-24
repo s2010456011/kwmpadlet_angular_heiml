@@ -3,7 +3,7 @@
 <button [routerLink]="'/padlets'" class="ui basic button"><i class="left arrow icon"></i>Zurück zum Dashboard</button>
 
 <div class="ui grid" *ngIf="padlet">
-  <div class="six wide column">
+  <div class="eight wide column">
     <br>
       <div class="column">
         <h1 class="ui header">{{padlet.title}}</h1>
@@ -18,11 +18,20 @@
           {{ padlet?.user?.firstname }} {{ padlet?.user?.lastname }}
         </a>
       </p>
+      <p>Erstellt am: {{padlet?.created_at | date:'dd.MM.yyyy'}}</p>
+      <p>Eingeladene User: </p>
+        <span *ngFor="let user of padlet?.users">
+    <a class="ui image label" style="margin-right: 10px">
+      <img src="{{ user.image }}">
+      {{ user.firstname}} {{ user.lastname }}
+    </a>
+  </span>
+
     </div>
   </div>
 
-  <div class="ten wide column right aligned">
-    <button class="ui green basic button" *ngIf="authService.isLoggedIn()">
+  <div class="eight wide column right aligned">
+    <button class="ui green basic button" *ngIf="authService.isLoggedIn()" [routerLink]="['../../create/', padlet.id]">
       <i class="icon user"></i>
       User einladen
     </button>
@@ -36,23 +45,29 @@
     </button>
   </div>
 
-  <div class="fifteen wide column">
+
+
+  <div class="fifteen wide column" >
+    <div class="ui divider"></div>
     <h2 class="ui header">Einträge</h2>
     <button [routerLink]="['../../padlets/'+padlet?.id+'/entries/edit']"  class="ui large button" type="button">+</button>
   </div>
-    <span *ngFor="let entry of padlet?.entries" class="">
-      <div class="ui segment">
-        <button class="mini ui negative basic button" *ngIf="authService.isLoggedIn()" (click)="removeEntry(entry)">
-          <i class="icon delete"></i> Löschen </button>
 
-        <button class="mini ui blue basic button" *ngIf="authService.isLoggedIn()" [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id+'/edit']" >
-          <i class="icon edit"></i> Bearbeiten </button>
+  <span *ngFor="let entry of padlet?.entries" [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id]">
+  <div class="ui padded segment" style="margin-bottom: 25px">
+    <button class="mini ui negative basic button" *ngIf="authService.isLoggedIn()" (click)="removeEntry(entry)">
+      <i class="icon delete"></i> Löschen
+    </button>
 
-        <h3 class="ui header">{{ entry?.title }}</h3>
-        <p>{{ entry?.text }}</p>
+    <button class="mini ui blue basic button" *ngIf="authService.isLoggedIn()" [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id+'/edit']">
+      <i class="icon edit"></i> Bearbeiten
+    </button>
 
-        <a [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id]">Mehr anzeigen...</a>
-      </div>
-    </span>
+    <h3 class="ui header">{{ entry?.title }}</h3>
+    <p>{{ entry?.text }}</p>
 
-</div>
+    <a [routerLink]="['../../padlets/'+padlet?.id+'/entries/'+entry?.id]">Mehr anzeigen...</a>
+  </div>
+</span>
+
+  </div>

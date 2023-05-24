@@ -14,9 +14,9 @@ export class Entry {
     public title: string,
     public created_at:Date,
     public updated_at:Date,
-    public user_id:number,
     public padlet_id:number,
-    public user: User,
+    public user_id?:number,
+    public user?: User,
     public comments?:Comment[],
     public ratings?:Rating[],
     public text?: string

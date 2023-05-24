@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
 
   //Auth Service für Information ob eineglogged oder nicht
   constructor(
-    private authService:AuthenticationService,
+    public authService:AuthenticationService,
     private ps:PadletAppService,
     private route: ActivatedRoute,
     public router: Router) {
